@@ -1,0 +1,40 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="CrossBrowserLoginTest" parallel="tests" thread-count="3">
+    <parameter name="username" value="tomsmith"/>
+    <parameter name="password" value="SuperSecretPassword!"/>
+
+    <test name="Login-Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.learning.tests.FirstTest">
+                <methods>
+                    <include name="firstTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Login-IE">
+        <parameter name="browser" value="IE"/>
+        <classes>
+            <class name="com.learning.tests.FirstTest">
+                <methods>
+                    <include name="firstTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+    <test name="Login-FF">
+        <parameter name="browser" value="FF"/>
+        <classes>
+            <class name="com.learning.tests.FirstTest">
+                <methods>
+                    <include name="firstTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

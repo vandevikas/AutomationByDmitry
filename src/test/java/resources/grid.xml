@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="AutomationInterviewPrep">
+    <!--parameter name="environment" value="local"/-->
+    <parameter name="environment" value="grid"/>
+
+    <test name="HoverRun">
+    <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.learning.tests.HoverExampleTest"/>
+        </classes>
+    </test>
+
+</suite>

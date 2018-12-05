@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="3" total="4" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="LoginTestCase" duration-ms="12826" started-at="2018-10-16T09:06:11 IST" finished-at="2018-10-16T09:06:23 IST">
+    <groups>
+    </groups>
+    <test name="LoginIntoSite" duration-ms="12826" started-at="2018-10-16T09:06:11 IST" finished-at="2018-10-16T09:06:23 IST">
+      <class name="com.learning.tests.FirstTest">
+        <test-method status="PASS" signature="setup(java.lang.String, org.testng.ITestContext)[pri:0, instance:com.learning.tests.FirstTest@1e7c7811]" name="setup" is-config="true" duration-ms="3656" started-at="2018-10-16T09:06:11 IST" finished-at="2018-10-16T09:06:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[org.testng.TestRunner@16022d9d]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="firstTest(java.lang.String, java.lang.String)[pri:0, instance:com.learning.tests.FirstTest@1e7c7811]" name="firstTest" duration-ms="8325" started-at="2018-10-16T09:06:14 IST" finished-at="2018-10-16T09:06:23 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[tomsmith]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[SuperSecretPassword!]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- firstTest -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.learning.tests.FirstTest@1e7c7811]" name="tearDown" is-config="true" duration-ms="744" started-at="2018-10-16T09:06:23 IST" finished-at="2018-10-16T09:06:23 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.learning.tests.FirstTest -->
+    </test> <!-- LoginIntoSite -->
+  </suite> <!-- LoginTestCase -->
+</testng-results>

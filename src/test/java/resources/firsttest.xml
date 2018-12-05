@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="LoginTestCase" parallel="methods" thread-count="2">
+    <parameter name="browser" value="chrome"/>
+
+    <listeners>
+        <listener class-name="com.learning.base.TestListner"/>
+    </listeners>
+    <test name="LoginIntoSite">
+
+        <parameter name="username" value="tomsmith"/>
+        <parameter name="password" value="SuperSecretPassword!"/>
+
+        <classes>
+            <class name="com.learning.tests.FirstTest">
+                <methods>
+                    <include name="firstTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

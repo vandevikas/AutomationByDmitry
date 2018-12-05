@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="AdvancedTopics" parallel="methods" thread-count="2">
+    <parameter name="browser" value="chrome"/>
+
+    <test name="Advanced">
+
+        <classes>
+            <class name="com.learning.tests.AdvancedInteractionsTest">
+                <methods>
+                    <include name="switchToFrameTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

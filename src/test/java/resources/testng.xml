@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="AutomationInterviewPrep">
+
+    <test name="HoverRun">
+        <classes>
+            <class name="com.learning.tests.HoverExampleTest"/>
+        </classes>
+    </test>
+
+    <test name="JavaScriptRun">
+        <classes>
+            <class name="com.learning.tests.JavaScriptExampleTest">
+                <methods>
+                    <include name="StaleElementExampleTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
