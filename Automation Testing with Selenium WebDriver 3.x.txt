@@ -1,0 +1,834 @@
+====================================================================================================================================================
+Dive into Core of Selenium Automation
+
+Project on github
+https://github.com/PacktPublishing/dive-into-core-of-selenium-automation
+====================================================================================================================================================
+
+Create a new Maven project and add following plugins in the POM.xml 
+
+1. apache maven compiler plugin
+https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+Where 	<source>1.8</source>
+        <target>1.8</target>
+1.8 is the version of java
+
+
+2. apache maven surefire plugin
+https://maven.apache.org/surefire/maven-surefire-plugin/
+Click on link under Examples on the above page:
+Using TestNG
+
+	<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.0</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
+	 
+	 
+3. maven testng dependency
+<dependency>
+  <groupId>org.testng</groupId>
+  <artifactId>testng</artifactId>
+  <version>6.8</version>
+  <scope>test</scope>
+</dependency>	 
+
+
+4. maven chromedriver dependency (rather use selenium java depeendency as it has only chrome related methods and don't have methods like WebDriverWait)
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-chrome-driver</artifactId>
+    <version>3.14.0</version>
+</dependency>
+
+in pom.xml file we have 1. plugins and 2. dependencies
+search more about plugins
+====================================================================================================================================================
+
+Shortcut to Format Code in Eclipse is Ctrl + Shift + F in Intellij it is Ctrl + Shift + L
+====================================================================================================================================================
+
+Now the pom files look like:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>DmitrySeleniumComplete</groupId>
+    <artifactId>AutomationByDmitry</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
+====================================================================================================================================================
+
+Need to download chrome driver exe from below link.
+http://chromedriver.chromium.org/downloads
+
+Better is to put driver exe in project folder 
+====================================================================================================================================================
+
+Any thing saved in the project structure you can give its location starting from src/
+like System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe")
+====================================================================================================================================================
+
+Goals in Maven environment are: clean test
+====================================================================================================================================================
+
+Good website for testing:
+https://the-internet.herokuapp.com/login
+====================================================================================================================================================
+
+Ranorex Selocity is an extention that can be added in Chrome browser to find xpath/CssSelector for a webelement
+====================================================================================================================================================
+
+Selenium API commands are generally:
+1. WebDriver commands -> Browser and Page level methods.
+2. WebElement commands -> Page elements level methods to interect with page objects
+i.e methods.
+====================================================================================================================================================
+
+Command Prompt: Running the project through command prompt.
+
+Go into the project where pom.xml file is put and open cmd prompt here.
+and type:
+mvn clean test
+====================================================================================================================================================
+
+WebDriverWait
+
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'You logged into a secure area!')]")));
+====================================================================================================================================================
+
+WebDriverWait can be used as:
+
+		WebElement start = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Start']")));
+        start.click();
+
+        WebElement loading = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='loading']")));
+        loading.isDisplayed();
+
+        wait.until(ExpectedConditions.invisibilityOf(loading));
+
+        WebElement helloWorld = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h4[text()='Hello World!']")));
+        Assert.assertTrue(helloWorld.isDisplayed());
+====================================================================================================================================================
+
+Some Selenium Exceptions:
+	1. ElementNotVisibleException - When element may be in DOM but not visible to the user.
+	2. StaleElementsRefrenceException - When the element is no longer attached to the DOM.
+		Page Refresh, User navigated to another page, JS library has deleted an element 
+		Solution is to search every time for the element on the page before interacting with the element. i.e. to update the refrence of the element
+		before searching the element.	
+====================================================================================================================================================
+
+JavaScriptExecutor: interface helps to execute JavaScript through selenium driver.
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("window.scrollBy(0,250)","");
+will scroll down.
+
+To scroll up just put -250
+
+window.scrollBy(xnum, ynum);
+window.scrollTo(0,document.body.scrollHeight);
+window.scrollTo(0,0);
+arguments[0].scrollIntoView();
+
+
+        WebElement table = driver.findElement(By.id("large-table"));
+        jsExecutor.executeScript("arguments[0].scrollIntoView();", table);
+You can scroll to a webelement and bring into view
+====================================================================================================================================================
+
+Cookies:
+driver.manage().addCookies(cookie);
+where Cookie cookie = new Cookie(name, value, domain, path, expiry);
+driver.manage().deleteAllCookies();
+driver.manage().deleteCookieNamed(name);
+driver.manage().getCookies();
+driver.manage().getCookieNamed(name).getValue();
+====================================================================================================================================================
+
+WebElement.sendKeys(Keys.ANY_KEY_IN_CAPS)
+====================================================================================================================================================
+
+To run testNG tests (xml file) from command prompt you need to put maven-surefire-plugin in the POM.xml file.
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+
+and in the suiteXmlFile give the full name of the testNG.xml file
+and in cmd write 
+mvn clean test			
+====================================================================================================================================================
+
+mvn clean test will run only testng.xml file but if you have other xml files that you want to run from cmd prompt then you have to add a 
+properties tag just above dependencies tag in the pom.xml and give suiteXmlFile name as the full path of testng.xml
+
+    <properties>
+        <suiteXmlFile>
+            src/test/resources/testng.xml
+        </suiteXmlFile>
+    </properties>
+
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+
+And in the surefire-plugin you write ${} and properties name in the {}
+
+NOW on cmd prompt if you write mvn clean test then testng.xml file will execute but if you want to run any other xml file then you write 
+mvn clean test -DsuiteXmlFile=src/test/resources/NEW_XML_FILE.xml
+
+i.e you write:
+mvn clean test -DAndNameOfPropertiesYouCreatedInXML=PathOfNewXMLFile.xml			
+====================================================================================================================================================
+
+Be smart in finding reusable code and put it in same place.
+====================================================================================================================================================
+
+@BeforeMethod will run before every @Test annotation.
+====================================================================================================================================================
+
+PageObjectModel:
+
+Test Classes are separated from Page Objects Classes (Containing elements and methods)
+====================================================================================================================================================
+
+driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
+implicit wait once set is set for life of driver instance.
+
+it is applied to all the elements in the script but explicit wait is applied to only specific elements
+Not recomended as it can increase run time of script unexpectedly.
+====================================================================================================================================================
+
+SoftAssert -> TestNG Class for soft asserting.
+SoftAssert softAssert = new SoftAssert();
+softAssert.assertTrue(true);
+softAssert.assertAll();
+
+need to write assertAll in the end of the script else all tests will pass i.e. script will not show failed steps.
+
+====================================================================================================================================================
+
+Advanced Selenium Automation
+
+====================================================================================================================================================
+
+Parameters from testNG
+Data Driven Testing - running a test with different variables is called ddt. (i.e. input data can be different or browsers can be different etc)
+====================================================================================================================================================
+
+Data Sources can be:
+Text files, Excel files, xml, csv, database, dataproviders in code, testNG parameters
+====================================================================================================================================================
+
+@Parameters 
+to use prarametres from testNG suite file.
+
+Like to put id and password in xml file.
+
+in xml we create a parameter with one name and its value, the name will be used in the AT to call value.
+<parameter name="username" value="tomsmith"/>
+
+parameter comes inbewteen test and classes tag.
+
+and in the @Test we put @Parameters({username, password}) -> to get these values from xml.
+and in the method below @Test we put parameters like testMethod(String username, String password) -> now you can use these values anywhere
+====================================================================================================================================================
+
+The above used parameters are at test level so we can use them in @BeforeTest and other annotations.
+We can also create parameters at suite level i.e in the xml we can put <parameter tag just below suite.
+
+ @BeforeMethod(alwaysRun = true)
+    @Parameters({"browser"})
+    protected void setup(String browser) {
+        switch (browser) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/browserExe/chromedriver.exe");
+                driver = new ChromeDriver();
+                break;
+        }
+    }
+
+====================================================================================================================================================
+
+We can make @Parameters optional also like 
+protected void setup(@Optional("IE") String browser) {
+If you give value with @Optional then this value is used in the scipt instead of value from xml.
+OR
+protected void setup(@Optional String browser) {
+so if you don't pass anything from xml then the test will not fail.
+====================================================================================================================================================
+
+@DataProviders -> used for passing complex data, like complex objects or run time created parameters by java.
+it returns array of array of objects.
+
+This is how data is set in the DataProvider 
+@DataProvider(name = "negativeLoginData")
+    public static Object[][] negativeLoginData(){
+        return new Object[][]{
+                {"IncorrectUserName", "SuperSecretPassword!", "Your username is invalid!"},
+                {"tomsmith", "IncorrectPassword", "Your password is invalid!"},
+                {"IncorrectUserName", "IncorrectPassword", "Your username is invalid!"}
+        };
+    }
+
+In method to use parametes
+@Test(dataProvider = "negativeLoginData")
+public void negativeLoginTest(String username, String password, String messagae) {
+   
+====================================================================================================================================================
+
+DataProvider is just like Scenario Outline in cucumber i.e. the test will run number of times the Examples are given i.e. set of data are given.
+====================================================================================================================================================
+
+CSV files for Data Driven Testing. -> Better then Excel as we don't need MS Excel to run tests.
+====================================================================================================================================================
+
+ String path = "src" + File.separator + "test" + File.separator
+                + "java" + File.separator + "resources" + File.separator +
+                "testData" + File.separator + method.getDeclaringClass().getSimpleName() +
+                File.separator + method.getName() + ".csv";
+				
+For creating a path which takes 				
+====================================================================================================================================================
+Test class where we use CSV
+
+    @Test(dataProvider = "negativeLoginTestWithCSV", dataProviderClass = CsvDataHandle.class) -> name of the @DataProvider, class where @DataProvider is created
+    public void negativeLoginTestWithCSV(Map<String, String> testData) { -> expecting Map as list.iterator() contains a Map
+
+        String username = testData.get("username"); -> username is header in CSV file.
+        String password = testData.get("password");	-> header of data in CSV file.
+        String messagae = testData.get("expectedError");
+
+When we run -> the testcase will run 3 times for 3 pair of tests. i.e. browser will open-close 3 times.
+So username will contain first row of data in first run. iterator will be responsible for it.
+		
+====================================================================================================================================================
+
+Sample CSV file:
+
+no,username,password,expectedError
+1,IncorrectUserName,SuperSecretPassword!,Your username  invalid!
+2,tomsmith,IncorrectPassword,Your password is invalid!
+3,IncorrectUserName,IncorrectPassword,Your username is invalid!
+====================================================================================================================================================
+
+public class CsvDataHandle {
+
+    @DataProvider(name = "negativeLoginTestWithCSV")
+    public static Iterator<Object[]> provideData(Method method) {
+        List<Object[]> list = new ArrayList<Object[]>();
+
+        String path = "src" + File.separator + "test" + File.separator
+                + "java" + File.separator + "resources" + File.separator +
+                "testData" + File.separator + method.getDeclaringClass().getSimpleName() +
+                File.separator + method.getName() + ".csv";
+
+        File file = new File(path);
+
+        try {
+            CSVReader reader = new CSVReader(new FileReader(file));
+            String[] keys = reader.readNext();
+            if (keys != null) {
+                String[] dataParts;
+                while ((dataParts = reader.readNext()) != null) {
+                    Map<String, String> testData = new HashMap<>();
+                    for (int i = 0; i < keys.length; i++) {
+                        testData.put(keys[i], dataParts[i]);
+                    }
+                    list.add(new Object[]{testData});
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File" + path + "was not found.\n" + e.getStackTrace().toString());
+        } catch (IOException e) {
+            throw new RuntimeException("File" + path + "was not found.\n" + e.getStackTrace().toString());
+        }
+        return list.iterator();
+    }
+}
+====================================================================================================================================================
+
+Cross browser testing:
+comparing functionality on different web browsers.
+
+Mozilla Gecko driver
+====================================================================================================================================================
+
+Browser Driver Factory: Put switch with browser string in a separate class.
+====================================================================================================================================================
+
+To run a test case in different browsers, just copy paset the test 3 times 1 for each browser and give browser name in parameter.
+It will run 1 test case on all different browsers.
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="CrossBrowserLoginTest">
+    <parameter name="username" value="tomsmith"/>
+    <parameter name="password" value="SuperSecretPassword!"/>
+
+    <test name="Login-Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.learning.tests.FirstTest">
+               <methods>
+                    <include name="firstTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Login-IE">
+        <parameter name="browser" value="IE"/>
+        <classes>
+            <class name="com.learning.tests.FirstTest">
+                <methods>
+                    <include name="firstTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+    <test name="Login-FF">
+        <parameter name="browser" value="FF"/>
+        <classes>
+            <class name="com.learning.tests.FirstTest">
+                <methods>
+                    <include name="firstTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
+====================================================================================================================================================
+
+There is case when a given test step works differently in a given browser (lets say on IE you need one extra click to do some action) 
+so in this case and we don't want to create a separate test for the given browser.
+
+====================================================================================================================================================
+
+Running tests in parallel:
+we need testNG for this, and it is done in suite tag like
+
+<suite name = "Parallel Suite" parallel = "methods" thread-count = "5"> -->> At methods level
+<suite name = "Parallel Suite" parallel = "tests" thread-count = "5"> -->> At test level
+<suite name = "Parallel Suite" parallel = "classes" thread-count = "5"> -->> At class level
+<suite name = "Parallel Suite" parallel = "instances" thread-count = "5"> -->> At instance level
+
+Thread count tells how many instances of browsers will be launched i.e if 2 then only 2 instances will be launched.
+
+Only doing this will run tests parallel,
+But this is not thread safe so you need to make driver as thread safe, so that it can be used by multiple threads at same time.
+
+We make ThreadLocal for this purpose in Browser factory class
+    ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+	
+	driver.set(new ChromeDriver());  ->> Setting chrome browser through set method
+	
+	return driver.get();  -> for returning the driver instance for each parallel running browser by get methods
+	
+====================================================================================================================================================
+
+Switching to windows.
+
+  driver.findElement(By.linkText("Click Here")).click();  -->> clicking a link to open a new window.
+
+  String firstWindow = driver.getWindowHandle();	-->> a new window is opened but getWindowHandle will give handle of already opened window.
+        Set<String> allWindows = driver.getWindowHandles();	-->> it takes all windows in a Set of Strings
+        Iterator<String> windows = allWindows.iterator();  -->>  a iterator is created to iterate in the windows.
+
+        while (windows.hasNext()) {		  -->>  the loop will keeps on executing until there is a element in the iterator
+            String current = windows.next().toString();  -->>  converting iterator content to String.
+            if (!firstWindow.equals(current)) {		 
+                driver.switchTo().window(current);
+                break;
+            }
+        }
+        System.out.println(driver.getTitle());
+        Assert.assertTrue(driver.getTitle().equals("New Window"));
+
+        driver.close();		  -->>  Closing the new opened window 
+        driver.switchTo().window(firstWindow);   -->>  But the focus is still on closed window so you need to switch to previous window.
+														Just like opening new window does not changes focus to it, closing new window does not change 
+														focus to first window.
+        
+        Assert.assertTrue(driver.getTitle().equals("The Internet"));
+====================================================================================================================================================
+
+iframe:
+
+ WebElement frameId = driver.findElement(By.id("mce_0_ifr"));
+ driver.switchTo().frame(frameId);
+====================================================================================================================================================
+
+Log4j2
+
+<dependencies>
+  <dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-api</artifactId>
+    <version>2.11.1</version>
+  </dependency>
+  <dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.11.1</version>
+  </dependency>
+</dependencies>
+
+====================================================================================================================================================
+
+Create a log4j2.xml in resources folder 
+and put below code:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%t] %d{HH:mm:ss,SSS} %-5p [%c{1}] %m%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="TRACE">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+
+    </Loggers>
+</Configuration>
+
+
+where:
+
+<PatternLayout pattern="[%t] %d{HH:mm:ss,SSS} %-5p [%c{1}] %m%n"/>
+
+[%t] -> thread name
+%d{HH:mm:ss,SSS} -> time
+%-5p -> info priority of logging
+[%c{1}] -> test name
+%m%n -> acutal message.
+====================================================================================================================================================
+
+Uploading file:
+
+
+====================================================================================================================================================
+
+Test Listners:
+Interfaces to modify TestNG behaviour.
+
+public class TestListner implements ITestListener {
+
+    public void onTestStart(ITestResult result) {
+        System.out.println("---Test is Starting---");
+    }
+
+    public void onTestSuccess(ITestResult result) {
+        System.out.println("---Test Passed---");
+    }
+
+    public void onTestFailure(ITestResult result) {
+        System.out.println("---Test Failed---");
+    }
+
+    public void onTestSkipped(ITestResult result) {
+        System.out.println("---Test Skipped---");
+    }
+
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+
+    }
+
+    public void onStart(ITestContext context) {
+        System.out.println("---START---");
+    }
+
+    public void onFinish(ITestContext context) {
+        System.out.println("---FINISH---");
+    }
+}
+
+<suite name="LoginTestCase" parallel="methods" thread-count="2">
+    <parameter name="browser" value="chrome"/>
+
+    <listeners>
+        <listener class-name="com.learning.base.TestListner"/>
+    </listeners>
+    <test name="LoginIntoSite">
+
+====================================================================================================================================================
+
+Capturing Screenshots:
+
+
+====================================================================================================================================================
+
+Javascript Errors:
+We can assert for any javascript errors on the page.
+The errors on a page can be:
+SEVERE
+WARNING
+INFO
+CONFIG
+FINE
+FINER
+FINEST
+
+====================================================================================================================================================
+
+To read the logs from browser and same them in a list of LogEntries we create this method in
+Base.class
+
+    public List<LogEntry> getBrowserLog(){
+        LogEntries log = driver.manage().logs().get("browser");
+        List<LogEntry> logList = log.getAll();
+        return logList;
+    }
+
+In the reading class:
+	
+	Log<LogEntry> logs = getBrowserLog();
+	log4j.info("Browser Log: " + logs);
+	
+	for(LogEntry log : logs){
+		if(log.getLevel().toString().equals("SEVERE");
+		softAssert.fail("Severe error: " + log.getMessage());		
+	}
+	softAssert.assertAll();
+====================================================================================================================================================
+
+Reading Basic TestNG Report:
+
+testng-results.xml is a file that can be used to create our own html page that will show this report.
+====================================================================================================================================================
+
+Extent Report:http://extentreports.com/docs/versions/3/java/#maven
+
+<dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>3.1.5</version>
+</dependency>
+
+
+//Check from github project
+====================================================================================================================================================
+
+Mastering Selenium WebDriver 3.X Test Automation
+//https://github.com/PacktPublishing/Advanced-Selenium-Automation
+
+====================================================================================================================================================
+
+xpath is a query language for selecting a node on the page.
+====================================================================================================================================================
+
+Cross browser Testing:
+Introduction to Selenium Server
+Selenium Grid - allows running tests on different machines against different browsers in parallel.
+which means we can setup a grid to run tests on different machines with:
+Different operating systems
+Different browses
+different versions of browsers in the same time.
+
+Reasons to use grid: cross browser/cross platform testing, faster test execution.
+
+Grid configuration conists for a Hub and multiple nodes.
+
+Hub - manages where and on which machines Selenium tests will run.
+	Also gives a list of all available nodes that are currently running in your grid environment
+====================================================================================================================================================
+
+To start hub download selenium server and use below code:
+java -jar [selenium server file].jar -role hub
+you can also give port number via -port [number]
+====================================================================================================================================================
+
+Node: a machine where tests will be executed
+	It is regestred with hub, and hub automatically picks a node to execute tests as per configuration specified (of the environment) for the test.
+====================================================================================================================================================
+
+To start node use:
+java -jar [selenium server file].jar -role node -hub http://hubIP:4444/grid/register
+we can start node with some parameters like adding available browsers
+-browser <parameters>
+
+If parameter is not set then node will start with 5 chrome 5 firefox and 1 IE instance.
+
+parameter are:
+	browserName
+	Version
+	path to executable firefox_binary
+	path to executable chrome_binary
+	maxInstances - max number of browsers 
+	platform
+====================================================================================================================================================
+
+BaseTest Class and all other classes are written in such a way that testNG or other config files can execute what ever they want without changing
+or updating anything in the core Classes. like Base class is written in such a way that you can specify grid browser, environment from xml file
+else it will execute test locally. (i.e not on remote envt if not specified.)
+====================================================================================================================================================
+
+You need to put stanalone server and browser binary on hub and on any node you want to execute your tests.
+====================================================================================================================================================
+
+http://localhost:4444/grid/console 
+====================================================================================================================================================
+
+open cmd where selenium server is located and write above commands for creating hub and node
+====================================================================================================================================================
+
+Automation Cloud Testing: Venders providing infrastructure just like selenium grid configuration, you even don't need to setup grid hub or nodes.
+Benefit is:
+different combinations of os and browsers
+Maintenance free
+====================================================================================================================================================
+
+Sauce Lab code:
+Again the point is your class should easily accomodate running tests on local, grid, or on Sauce Lab i.e you should only give value in config file/xml
+file about where to run your tests and class should take the parameter from xml and execute it. 
+No changes in class should be done.
+====================================================================================================================================================
+
+DesiredCapabilities: in JAVA:
+
+DesiredCapabilities caps = DesiredCapabilities.chrome();
+caps.setCapability("platform:,"Window 8.1");
+caps.setCapability("version","53.0");
+
+we are not creating a new object of DesiredCapabilities in java, but in C#, python ruby we create object which is much more beneficitial:
+
+DesiredCapabilities caps = new DesiredCapabilities();
+caps.setCapability("browserName","Chrome");  -> only this step is different 
+caps.setCapability("platform:,"Window 8.1");
+caps.setCapability("version","53.0");
+====================================================================================================================================================
+ITestContext itc
+String testName = itc.getCurrentXmlTest().getName(); -> 
+it returns test name from testng.xml file i.e what ever is the test name in xml file it returns it.
+
+====================================================================================================================================================
+
+Create Atomic tests, use explict wait.
+
+Selenium is not good to test data set as Selenium is UI testing tool and data testing is server side or testing functionality developed is server side.
+
+Good Point -> can we use cookies for login as we are logining on site before every scenario.
+====================================================================================================================================================
+
+GIT:
+GitHub is an open source version control system (VCS) called Git.
+GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+
+repositories, branches, commits, and Pull Requests
+
+A repository is usually used to organize a single project. 
+
+====================================================================================================================================================
+Git Hub: 
+
+====================================================================================================================================================
+
+
+====================================================================================================================================================
+
+
+====================================================================================================================================================
+
+
+====================================================================================================================================================
+
+
+====================================================================================================================================================
+
+
+====================================================================================================================================================
+
+
+====================================================================================================================================================
+
+
+====================================================================================================================================================
