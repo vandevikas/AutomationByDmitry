@@ -71,6 +71,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!--1.8 is version of java or you can add 1.9 version of java if you like-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -82,6 +83,8 @@
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
+            <!--in surefire plugin the configuration tag is used to locate testng.xml files and if you don't have
+            testng file in the project to run tests then remove complete configuration tags-->
 
         </plugins>
     </build>

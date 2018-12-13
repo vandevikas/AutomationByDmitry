@@ -45,7 +45,7 @@ Using TestNG
       </plugin>
 	 
 	 
-3. maven testng dependency
+3. testng dependency
 <dependency>
   <groupId>org.testng</groupId>
   <artifactId>testng</artifactId>
@@ -54,7 +54,7 @@ Using TestNG
 </dependency>	 
 
 
-4. maven chromedriver dependency (rather use selenium java depeendency as it has only chrome related methods and don't have methods like WebDriverWait)
+4. chromedriver dependency (rather use selenium java depeendency as it has only chrome related methods and don't have methods like WebDriverWait)
 <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
 <dependency>
     <groupId>org.seleniumhq.selenium</groupId>
@@ -63,7 +63,6 @@ Using TestNG
 </dependency>
 
 in pom.xml file we have 1. plugins and 2. dependencies
-search more about plugins
 ====================================================================================================================================================
 
 Shortcut to Format Code in Eclipse is Ctrl + Shift + F in Intellij it is Ctrl + Shift + L
@@ -137,6 +136,7 @@ like System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriv
 ====================================================================================================================================================
 
 Goals in Maven environment are: clean test
+This can also be useful while creating Run Configuration in any IDE
 ====================================================================================================================================================
 
 Good website for testing:
@@ -157,6 +157,24 @@ Command Prompt: Running the project through command prompt.
 Go into the project where pom.xml file is put and open cmd prompt here.
 and type:
 mvn clean test
+====================================================================================================================================================
+
+WebDriver Commands:
+driver.get();		driver.navigate().to();		driver.getTitle();		driver.getPageSource();		driver.findElement
+i.e all the commands related to browser.
+
+WebElement commands:
+element.click();		element.sendKeys();		element.clear();		element.isDisplayed();		element.getText();
+====================================================================================================================================================
+
+Running test from cmd prompt:
+1. go to pom.xml file in cmd.
+2. write -> mvn clean test
+
+====================================================================================================================================================
+====================================================================================================================================================
+Start from Verifications and Assertions and remove all ====
+====================================================================================================================================================
 ====================================================================================================================================================
 
 WebDriverWait
